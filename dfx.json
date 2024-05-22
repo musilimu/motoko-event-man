@@ -1,0 +1,26 @@
+{
+  "canisters": {
+    "motoko_event_man_backend": {
+      "main": "src/motoko_event_man_backend/main.mo",
+      "type": "motoko"
+    },
+    "motoko_event_man_frontend": {
+      "dependencies": [
+        "motoko_event_man_backend"
+      ],
+      "source": [
+        "src/motoko_event_man_frontend/dist"
+      ],
+      "type": "assets",
+      "workspace": "motoko_event_man_frontend"
+    }
+  },
+  "defaults": {
+    "build": {
+      "args": "",
+      "packtool": ""
+    }
+  },
+  "output_env_file": ".env",
+  "version": 1
+}
