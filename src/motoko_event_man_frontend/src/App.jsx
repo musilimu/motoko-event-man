@@ -1,31 +1,34 @@
-import { useState } from 'react';
-import { motoko_event_man_backend } from 'declarations/motoko_event_man_backend';
+import { useEffect, useState } from 'react';
+import React from 'react';
+import { getEvents } from './hooks/getEvents'
+import { Event } from './components/Event';
+import Form from './components/Form'
 
 function App() {
-  const [greeting, setGreeting] = useState('');
+	const [events, setEvents] = useState([])
+	useEffect(() => {
 
-  function handleSubmit(event) {
-    event.preventDefault();
-    const name = event.target.elements.name.value;
-    motoko_event_man_backend.greet(name).then((greeting) => {
-      setGreeting(greeting);
-    });
-    return false;
-  }
+		getEvents().then(data => {
+			// console.log(data);
+			setEvents(data);
+		})
+	}, [])
 
-  return (
-    <main>
-      <img src="/logo2.svg" alt="DFINITY logo" />
-      <br />
-      <br />
-      <form action="#" onSubmit={handleSubmit}>
-        <label htmlFor="name">Enter your name: &nbsp;</label>
-        <input id="name" alt="Name" type="text" />
-        <button type="submit">Click Me!</button>
-      </form>
-      <section id="greeting">{greeting}</section>
-    </main>
-  );
+
+	return (
+		<div className='container mx-auto mt-8'>
+			<Form title="Register your event" />
+			<h1 className='text-3xl text-fuchsia-950 font-bold'>Event Ticket Manager</h1>
+
+			<main className='grid gap-4 grid-cols-3 mt-4'>
+				{events.map(event => {
+					console.log(event)
+					// @ts-ignore
+					return <Event key={event.title} event={event} />
+				})}
+			</main>
+		</div>
+	);
 }
 
 export default App;
